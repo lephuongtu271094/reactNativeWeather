@@ -1,0 +1,3 @@
+rootProject.name = 'folder_structure_react_native'
+
+include ':app'
