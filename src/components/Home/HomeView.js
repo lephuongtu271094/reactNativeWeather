@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
+import ListCity from './components/ListCity';
 import {
     View,
-    Text,
-    TouchableOpacity
+    FlatList
 } from 'react-native';
+import * as css from './StyleHome';
 
 export default class HomeView extends Component {
-    render() {
+
+    _navigation;
+
+    renderRow({ item }) {
+        const { icon, place, time, currentTemp } = item;
+        const temp = css.addDegreesToEnd(currentTemp);
         return (
-            <View>
-                <Text>this is home</Text>
-                <TouchableOpacity
-                    onPress={() => { this.props.navigation.push('Screen_DetailCity'); }}
-                >
-                    <Text>next to detal city</Text>
-                </TouchableOpacity>
+            <ListCity
+                navigation={_navigation}
+                icon={icon}
+                place={place}
+                time={time}
+                temp={temp}
+            />
+        )
+    };
+
+    render() {
+        const { navigation, listData } = this.props;
+        _navigation = navigation;
+        return (
+            <View style={css.HomeScreen.v_container}>
+                <FlatList
+                    style={css.HomeScreen.container}
+                    data={listData}
+                    renderItem={this.renderRow}
+                />
             </View>
         );
     }
